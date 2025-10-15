@@ -30,7 +30,6 @@ public class Marca {
 	private String nome;
 	private String pais;
 	
-	public Marca() {}
 	
 	public Marca(DadosCadastroMarca dados) {
 		this.nome=dados.nome();
