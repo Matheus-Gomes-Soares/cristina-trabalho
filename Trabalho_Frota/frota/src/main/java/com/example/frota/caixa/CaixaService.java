@@ -1,4 +1,4 @@
-package com.example.frota.caminhao;
+package com.example.frota.caixa;
 
 import java.util.List;
 import java.util.Optional;
@@ -9,13 +9,18 @@ import org.springframework.stereotype.Service;
 
 import jakarta.persistence.EntityNotFoundException;
 
-import com.example.frota.marca.Marca;
+import com.example.frota.caminhao.CaminhaoMapper;
+import com.example.frota.caminhao.CaminhaoRepository;
 import com.example.frota.marca.MarcaService;
 
 @Service
 public class CaixaService {
 	@Autowired
 	private CaixaRepository caixaRepository;
+	
+	
+	@Autowired
+	private CaixaMapper caixaMapper;
 	
 	public Caixa salvarOuAtualizar(AtualizacaoCaixa dto) {
         if (dto.id() != null) {
@@ -24,21 +29,23 @@ public class CaixaService {
                 .orElseThrow(() -> new EntityNotFoundException("Caixa não encontrada com ID: " + dto.id()));
             return caixaRepository.save(existente);
         } else {
-            // criando Novo caminhão
-            Caixa novaCaixa = CaixaRepository.salvar()
+            // criando Nova Caixa
+        	 Caixa novaCaixa = caixaMapper.toEntityFromAtualizacao(dto);
+             
+             return caixaRepository.save(novaCaixa);
             
-            return caminhaoRepository.save(novoCaminhao);
+           
         }
     }
 	
-	public List<Caminhao> procurarTodos(){
-		return caminhaoRepository.findAll(Sort.by("modelo").ascending());
+	public List<Caixa> procurarTodos(){
+		return caixaRepository.findAll();
 	}
 	public void apagarPorId (Long id) {
-		caminhaoRepository.deleteById(id);
+		caixaRepository.deleteById(id);
 	}
 	
-	public Optional<Caminhao> procurarPorId(Long id) {
-	    return caminhaoRepository.findById(id);
+	public Optional<Caixa> procurarPorId(Long id) {
+	    return caixaRepository.findById(id);
 	}
 }

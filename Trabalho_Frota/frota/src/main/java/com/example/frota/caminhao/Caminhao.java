@@ -41,6 +41,7 @@ public class Caminhao {
 	private double comprimento;
 	private double largura;
 	private double altura;
+	//metragemCubica é de fato necessária porque essa infeliz é apenas um cálculo
 	private double metragemCubica;
 	private final double fatorCubagem = 300; // Fator de cubagem para transporte rodoviário: 300 kg/m³.
 

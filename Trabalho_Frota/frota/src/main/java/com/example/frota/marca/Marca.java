@@ -22,12 +22,15 @@ import lombok.Setter;
 @EqualsAndHashCode(of ="id")
 public class Marca {
 	
+	
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name = "marca_id")
 	private long id;
 	private String nome;
 	private String pais;
+	
+	public Marca() {}
 	
 	public Marca(DadosCadastroMarca dados) {
 		this.nome=dados.nome();
