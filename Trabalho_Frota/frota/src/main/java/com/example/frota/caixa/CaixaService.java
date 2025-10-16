@@ -38,7 +38,7 @@ public class CaixaService {
         }
     }
 	
-	public List<Caixa> procurarTodos(){
+	public List<Caixa> procurarTodas(){
 		return caixaRepository.findAll();
 	}
 	public void apagarPorId (Long id) {

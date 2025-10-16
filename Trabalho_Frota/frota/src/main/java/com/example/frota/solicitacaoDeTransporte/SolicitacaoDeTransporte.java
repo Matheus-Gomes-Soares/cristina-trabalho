@@ -22,7 +22,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@Table(name = "solicitacao_de_transporte")
+@Table(name = "solicitacaoDeTransporte")
 @Getter
 @Setter
 @NoArgsConstructor
@@ -33,7 +33,7 @@ public class SolicitacaoDeTransporte {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(name = "solicitacao_de_transporte_id")
+	@Column(name = "solicitacaoDeTransporte_id")
 	private Long id;
 	private Produto produto;
 	private Caixa caixa;
