@@ -14,6 +14,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
@@ -29,13 +30,15 @@ import lombok.Setter;
 @AllArgsConstructor
 @EqualsAndHashCode(of ="id")
 public class SolicitacaoDeTransporte {
-
-
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name = "solicitacaoDeTransporte_id")
 	private Long id;
+	@OneToOne
+	@JoinColumn(name="produto_id")
 	private Produto produto;
+	@ManyToOne
+	@JoinColumn(name="caixa_id")
 	private Caixa caixa;
 	private double cargaMaxima;
 	private int ano;

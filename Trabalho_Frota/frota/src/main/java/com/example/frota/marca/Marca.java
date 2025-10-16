@@ -27,6 +27,7 @@ public class Marca {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name = "marca_id")
 	private long id;
+	
 	private String nome;
 	private String pais;
 	
