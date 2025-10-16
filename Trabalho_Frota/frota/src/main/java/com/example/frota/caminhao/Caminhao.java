@@ -41,8 +41,8 @@ public class Caminhao {
 	private double comprimento;
 	private double largura;
 	private double altura;
-	//metragemCubica é de fato necessária porque essa infeliz é apenas um cálculo
-	private double metragemCubica;
+	//Apaguei metragem cúbica
+	
 	private final double fatorCubagem = 300; // Fator de cubagem para transporte rodoviário: 300 kg/m³.
 
 
@@ -52,7 +52,7 @@ public class Caminhao {
 		this.cargaMaxima = dados.cargaMaxima();
 		this.marca = marca;
 		this.ano= dados.ano();
-		this.metragemCubica = calculoMetragem();
+	
 	}
 	public Caminhao(AtualizacaoCaminhao dados, Marca marca) {
 		this.modelo = dados.modelo();
@@ -64,7 +64,6 @@ public class Caminhao {
 		this.comprimento = dados.comprimento();
 		this.altura = dados.altura();
 		this.largura = dados.largura();
-		this.metragemCubica = calculoMetragem();
 	
 	}
 	
@@ -79,13 +78,12 @@ public class Caminhao {
 			this.marca = marca;
 		if (dados.ano() != 0)
 			this.ano = dados.ano();
-		this.metragemCubica = calculoMetragem();
 	}
 
 	
 	public double calculoMetragem(){
-		double resultado = this.altura * this.largura * this.comprimento * this.fatorCubagem;
-		return resultado;
+		double resultadoMetragem = this.altura * this.largura * this.comprimento * this.fatorCubagem;
+		return resultadoMetragem;
 	}
 
 }
