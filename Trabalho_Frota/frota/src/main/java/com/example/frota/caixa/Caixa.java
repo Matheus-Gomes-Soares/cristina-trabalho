@@ -51,7 +51,10 @@ public class Caixa {
 	}
 	
 	public void atualizarInformacoes(AtualizacaoCaixa dados) {
-			if (dados.comprimento() != 0)
+		if(dados.modelo()!= null) {
+			this.modelo = dados.modelo();
+		}
+		if (dados.comprimento() != 0)
 			this.comprimento = dados.comprimento();
 		if(dados.altura() != 0)
 			this.altura = dados.altura();

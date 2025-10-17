@@ -48,6 +48,7 @@ public class CaixaService {
 	    if (dto.id() == null) {
 	        return caixaRepository.save(new Caixa(dto));
 	    } else {
+	    	System.out.println("entra no else, afinal é atualização e está com dto " + dto);
 	        Caixa caixa = caixaRepository.findById(dto.id())
 	            .orElseThrow(() -> new EntityNotFoundException("Caixa não encontrada"));
 	        caixa.atualizarInformacoes(dto);
