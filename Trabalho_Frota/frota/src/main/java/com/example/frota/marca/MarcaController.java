@@ -24,14 +24,20 @@ public class MarcaController {
 		model.addAttribute("lista",marcaService.procurarTodos() );
 		return "marca/listagem";              
 	} 
-	@GetMapping ("/formulario")             
+	
+	
+	
+	@GetMapping("/formulario")             
 	public String carregaPaginaFormulario(Long id, Model model) {
-		if(id != null) {
-			var marca =marcaService.procurarPorId(id);
-			model.addAttribute("marca", marca);
-		}
-		return "marca/formulario";     
+	    if (id != null) {
+	        var marca = marcaService.procurarPorId(id)
+	            .orElseThrow(() -> new IllegalArgumentException("Marca não encontrada"));
+	        model.addAttribute("marca", marca);
+	    }
+	    return "marca/formulario";     
 	}
+	
+	
 	@DeleteMapping
 	@Transactional
 	public String excluir (Long id) {
