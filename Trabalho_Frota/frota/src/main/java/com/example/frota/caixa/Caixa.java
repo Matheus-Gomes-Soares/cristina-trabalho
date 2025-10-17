@@ -25,6 +25,7 @@ public class Caixa {
 	@Column(name = "caixa_id")
 	private Long id;
 	// atributos específicos caixa
+	private String modelo;
 	private double comprimento;
 	private double largura;
 	private double altura;
@@ -33,6 +34,7 @@ public class Caixa {
 
 	public Caixa(CadastroCaixa dados) {
 		//novos na atualização
+		this.modelo= dados.modelo();
 		this.comprimento = dados.comprimento();
 		this.altura = dados.altura();
 		this.largura = dados.largura();
@@ -40,6 +42,7 @@ public class Caixa {
         this.limiteDePeso = dados.limiteDePeso();
 	}
 	public Caixa(AtualizacaoCaixa dados) {
+		this.modelo= dados.modelo();
 		this.comprimento = dados.comprimento();
 		this.altura = dados.altura();
 		this.largura = dados.largura();

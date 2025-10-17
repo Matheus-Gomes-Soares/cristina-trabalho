@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragmentos/head :: head('Listagem Caixas')}"></head>
+<body>
+<header th:replace="~{fragmentos/header :: header(activePage='caixa')}"></header>
+    <h1>Lista de Caixas</h1>
+    <a href="/caixa/formulario">Nova Caixa</a>
+    <table>
+        <thead>
+            <tr>
+                <th>Modelo</th>
+                <th>Material</th>
+                <th>Largura (cm)</th>
+                <th>Altura (cm)</th>
+                <th>Comprimento (cm)</th>
+                <th>Ações</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="caixa : ${lista}">
+                <td th:text="${caixa.modelo}"></td>
+                <td th:text="${caixa.material}"></td>
+                <td th:text="${caixa.largura}"></td>
+                <td th:text="${caixa.altura}"></td>
+                <td th:text="${caixa.comprimento}"></td>
+                <td>
+                    <a th:href="@{/caixa/formulario?id={id}(id=${caixa.id})}">
+                        <button>Editar</button>
+                    </a>
+                    <form action="/caixa" method="post" style="display:inline;">
+                        <input type="hidden" name="_method" value="delete">
+                        <input type="hidden" name="id" th:value="${caixa.id}">
+                        <input type="submit" value="Excluir">
+                    </form>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</body>
+</html>

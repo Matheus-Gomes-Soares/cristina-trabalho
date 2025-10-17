@@ -6,8 +6,8 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2025-10-11T11:12:40-0300",
-    comments = "version: 1.5.5.Final, compiler: Eclipse JDT (IDE) 3.44.0.v20251001-1143, environment: Java 21.0.8 (Eclipse Adoptium)"
+    date = "2025-10-16T23:55:30-0300",
+    comments = "version: 1.5.5.Final, compiler: javac, environment: Java 21.0.7 (BellSoft)"
 )
 @Component
 public class CaminhaoMapperImpl implements CaminhaoMapper {
@@ -27,7 +27,6 @@ public class CaminhaoMapperImpl implements CaminhaoMapper {
         Double largura = null;
         Double comprimento = null;
         Double altura = null;
-        Double metragemCubica = null;
 
         marcaId = caminhaoMarcaId( caminhao );
         id = caminhao.getId();
@@ -38,7 +37,8 @@ public class CaminhaoMapperImpl implements CaminhaoMapper {
         largura = caminhao.getLargura();
         comprimento = caminhao.getComprimento();
         altura = caminhao.getAltura();
-        metragemCubica = caminhao.getMetragemCubica();
+
+        Double metragemCubica = null;
 
         AtualizacaoCaminhao atualizacaoCaminhao = new AtualizacaoCaminhao( id, modelo, placa, ano, cargaMaxima, marcaId, largura, comprimento, altura, metragemCubica );
 
@@ -54,14 +54,13 @@ public class CaminhaoMapperImpl implements CaminhaoMapper {
         Caminhao caminhao = new Caminhao();
 
         caminhao.setMarca( idToMarca( dto.marcaId() ) );
-        if ( dto.altura() != null ) {
-            caminhao.setAltura( dto.altura() );
+        caminhao.setModelo( dto.modelo() );
+        caminhao.setPlaca( dto.placa() );
+        if ( dto.cargaMaxima() != null ) {
+            caminhao.setCargaMaxima( dto.cargaMaxima() );
         }
         if ( dto.ano() != null ) {
             caminhao.setAno( dto.ano() );
-        }
-        if ( dto.cargaMaxima() != null ) {
-            caminhao.setCargaMaxima( dto.cargaMaxima() );
         }
         if ( dto.comprimento() != null ) {
             caminhao.setComprimento( dto.comprimento() );
@@ -69,11 +68,9 @@ public class CaminhaoMapperImpl implements CaminhaoMapper {
         if ( dto.largura() != null ) {
             caminhao.setLargura( dto.largura() );
         }
-        if ( dto.metragemCubica() != null ) {
-            caminhao.setMetragemCubica( dto.metragemCubica() );
+        if ( dto.altura() != null ) {
+            caminhao.setAltura( dto.altura() );
         }
-        caminhao.setModelo( dto.modelo() );
-        caminhao.setPlaca( dto.placa() );
 
         return caminhao;
     }
@@ -85,14 +82,13 @@ public class CaminhaoMapperImpl implements CaminhaoMapper {
         }
 
         caminhao.setMarca( idToMarca( dto.marcaId() ) );
-        if ( dto.altura() != null ) {
-            caminhao.setAltura( dto.altura() );
+        caminhao.setModelo( dto.modelo() );
+        caminhao.setPlaca( dto.placa() );
+        if ( dto.cargaMaxima() != null ) {
+            caminhao.setCargaMaxima( dto.cargaMaxima() );
         }
         if ( dto.ano() != null ) {
             caminhao.setAno( dto.ano() );
-        }
-        if ( dto.cargaMaxima() != null ) {
-            caminhao.setCargaMaxima( dto.cargaMaxima() );
         }
         if ( dto.comprimento() != null ) {
             caminhao.setComprimento( dto.comprimento() );
@@ -100,11 +96,9 @@ public class CaminhaoMapperImpl implements CaminhaoMapper {
         if ( dto.largura() != null ) {
             caminhao.setLargura( dto.largura() );
         }
-        if ( dto.metragemCubica() != null ) {
-            caminhao.setMetragemCubica( dto.metragemCubica() );
+        if ( dto.altura() != null ) {
+            caminhao.setAltura( dto.altura() );
         }
-        caminhao.setModelo( dto.modelo() );
-        caminhao.setPlaca( dto.placa() );
     }
 
     private Long caminhaoMarcaId(Caminhao caminhao) {

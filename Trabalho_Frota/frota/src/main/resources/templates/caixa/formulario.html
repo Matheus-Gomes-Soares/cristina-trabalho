@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang ="en" xmlns:th="http://thymeleaf.org" >
+<head th:replace="~{fragmentos/head :: head('Cadastro Caixa')}"></head>
+<body>
+<header th:replace="~{fragmentos/header :: header(activePage='caixa')}"></header>
+
+<div layout:fragment="header">
+	<div class="box">
+		<h1>Cadastro Caixa</h1>
+		<form th:action="@{/caixa/salvar}" th:object="${caixa}" method="post">
+		<input type="hidden" th:field="*{id}" />
+		
+		
+			
+		<div class="form-group">
+				<label for="modelo"> Modelo: </label> <input class="form-control"
+					type="text" th:field="*{modelo}"
+					 th:classappend="${#fields.hasErrors('modelo')} ? 'is-invalid'">
+                <div th:errors="*{modelo}" class="invalid-feedback"></div>
+			</div>
+			
+			<div class="form-group">
+				<label for="comprimento"> Comprimento: </label> <input class="form-control"
+					type="number" th:field="*{comprimento}"
+					 th:classappend="${#fields.hasErrors('comprimento')} ? 'is-invalid'">
+                <div th:errors="*{comprimento}" class="invalid-feedback"></div>
+			</div>
+			
+			<div class="form-group">
+				<label for="largura"> Largura: </label> <input class="form-control"
+					type="number" th:field="*{largura}"
+					 th:classappend="${#fields.hasErrors('largura')} ? 'is-invalid'">
+                <div th:errors="*{largura}" class="invalid-feedback"></div>
+			</div>
+			
+			<div class="form-group">
+    <label for="altura"> Altura: </label>
+    <input class="form-control"
+           type="number"
+           th:field="*{altura}"
+           th:classappend="${#fields.hasErrors('altura')} ? 'is-invalid'">
+    <div th:errors="*{altura}" class="invalid-feedback"></div>
+</div>
+
+<div class="form-group">
+    <label for="material"> Material: </label>
+    <input class="form-control"
+           type="text"
+           th:field="*{material}"
+           th:classappend="${#fields.hasErrors('material')} ? 'is-invalid'">
+    <div th:errors="*{material}" class="invalid-feedback"></div>
+</div>
+
+<div class="form-group">
+    <label for="limiteDePeso"> Limite de Peso: </label>
+    <input class="form-control"
+           type="number"
+           th:field="*{limiteDePeso}"
+           th:classappend="${#fields.hasErrors('limiteDePeso')} ? 'is-invalid'">
+    <div th:errors="*{limiteDePeso}" class="invalid-feedback"></div>
+</div>
+
+			<input type="submit" value="Cadastrar">
+		</form>
+	</div>
+</div>
+</body>
+</html>

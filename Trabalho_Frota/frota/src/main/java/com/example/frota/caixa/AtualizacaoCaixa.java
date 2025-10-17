@@ -6,6 +6,8 @@ import jakarta.validation.constraints.Positive;
 public record AtualizacaoCaixa(
 	    Long id,
 		
+	    @NotNull (message = "modelo é obrigatório")
+	    String modelo,
 	    @NotNull(message = "Largura é obrigatória")
 	    @Positive(message = "Largura deve ser positiva")
 		Double largura,
