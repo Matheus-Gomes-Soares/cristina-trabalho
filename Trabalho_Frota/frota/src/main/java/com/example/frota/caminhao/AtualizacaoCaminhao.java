@@ -36,12 +36,7 @@ public record AtualizacaoCaminhao(
 
 		@NotNull(message = "Altura é obrigatória")
 	    @Positive(message = "Altura deve ser positiva")
-		Double altura,
-
-		@NotNull(message = "metragem é obrigatória")
-	    @Positive(message = "Altura deve ser positiva")
-		Double metragemCubica
-		
+		Double altura
 		
 	) {}
 

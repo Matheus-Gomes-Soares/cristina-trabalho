@@ -48,7 +48,7 @@ public class CaminhaoController {
             dto = caminhaoMapper.toAtualizacaoDto(caminhao);
         } else {
             // criação: DTO vazio
-            dto = new AtualizacaoCaminhao(null, "", "", null, null, null, null, null, null, null);
+            dto = new AtualizacaoCaminhao(null, "", "", null, null, null, null, null, null);
         }
         model.addAttribute("caminhao", dto);
         model.addAttribute("marcas", marcaService.procurarTodos());
@@ -90,12 +90,16 @@ public class CaminhaoController {
                         BindingResult result,
                         RedirectAttributes redirectAttributes,
                         Model model) {
+		System.out.println("Método do controller alcançado");
 		if (result.hasErrors()) {
+			System.out.println("Ele entra no erro");
 	        // Recarrega dados necessários para mostrar erros
+			result.getAllErrors().forEach(e -> System.out.println(e.toString()));
 	        model.addAttribute("marcas", marcaService.procurarTodos());
 	        return "caminhao/formulario";
 	    }
 	    try {
+	    	System.out.println("Ele entra no try");
 	        Caminhao caminhaoSalvo = caminhaoService.salvarOuAtualizar(dto);
 	        String mensagem = dto.id() != null 
 	            ? "Caminhão '" + caminhaoSalvo.getPlaca() + "' atualizado com sucesso!"
@@ -103,6 +107,7 @@ public class CaminhaoController {
 	        redirectAttributes.addFlashAttribute("message", mensagem);
 	        return "redirect:/caminhao";
 	    } catch (EntityNotFoundException e) {
+	    	System.out.println("Ele entra na excessão");
 	        redirectAttributes.addFlashAttribute("error", e.getMessage());
 	        return "redirect:/caminhao/formulario" + (dto.id() != null ? "?id=" + dto.id() : "");
 	    }

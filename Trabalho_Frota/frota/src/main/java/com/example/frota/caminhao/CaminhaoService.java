@@ -25,9 +25,11 @@ public class CaminhaoService {
 	
 	public Caminhao salvarOuAtualizar(AtualizacaoCaminhao dto) {
         // Valida se a marca existe
+		System.out.println("Método da service alcançado");
         Marca marca = marcaService.procurarPorId(dto.marcaId())
             .orElseThrow(() -> new EntityNotFoundException("Marca não encontrada com ID: " + dto.marcaId()));
         if (dto.id() != null) {
+        	System.out.println("Ele entra na edição de caminhão");
             // atualizando Busca existente e atualiza
             Caminhao existente = caminhaoRepository.findById(dto.id())
                 .orElseThrow(() -> new EntityNotFoundException("Caminhão não encontrado com ID: " + dto.id()));
@@ -36,6 +38,7 @@ public class CaminhaoService {
             return caminhaoRepository.save(existente);
         } else {
             // criando Novo caminhão
+        	System.out.println("Ele entra na criação de novo caminhão");
             Caminhao novoCaminhao = caminhaoMapper.toEntityFromAtualizacao(dto);
             novoCaminhao.setMarca(marca); // Define a marca completa
             

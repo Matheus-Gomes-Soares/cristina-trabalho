@@ -77,6 +77,29 @@
                 <div th:errors="*{cargaMaxima}" class="invalid-feedback"></div>
 			</div>
 			
+			<div class="form-group">
+				<label for="comprimento"> Comprimento: </label> <input
+					class="form-control" type="number"
+					th:field="*{comprimento}"
+					th:classappend="${#fields.hasErrors('comprimento')} ? 'is-invalid'">
+                <div th:errors="*{comprimento}" class="invalid-feedback"></div>
+			</div>
+			<div class="form-group">
+				<label for="largura"> Largura: </label> <input
+					class="form-control" type="number"
+					th:field="*{largura}"
+					th:classappend="${#fields.hasErrors('largura')} ? 'is-invalid'">
+                <div th:errors="*{largura}" class="invalid-feedback"></div>
+			</div>
+			<div class="form-group">
+				<label for="altura"> Altura: </label> <input
+					class="form-control" type="number"
+					th:field="*{altura}"
+					th:classappend="${#fields.hasErrors('altura')} ? 'is-invalid'">
+                <div th:errors="*{altura}" class="invalid-feedback"></div>
+			</div>
+			
+			
 			<button type="submit" class="btn btn-primary">
                 <span th:text="${caminhao.id != null} ? 'Atualizar' : 'Cadastrar'"></span>
             </button>
