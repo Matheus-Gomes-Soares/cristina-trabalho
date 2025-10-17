@@ -3,10 +3,13 @@ package com.example.frota.solicitacaoDeTransporte;
 import java.util.List;
 
 import com.example.frota.caixa.Caixa;
+import com.example.frota.caminhao.AtualizacaoCaminhao;
+import com.example.frota.caminhao.CadastroCaminhao;
 import com.example.frota.caminhao.Caminhao;
 import com.example.frota.marca.Marca;
 
 import jakarta.persistence.Column;
+import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -34,14 +37,40 @@ public class SolicitacaoDeTransporte {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name = "solicitacaoDeTransporte_id")
 	private Long id;
-	@OneToOne
-	@JoinColumn(name="produto_id")
+	@Embedded
 	private Produto produto;
 	@ManyToOne
 	@JoinColumn(name="caixa_id")
 	private Caixa caixa;
-	private double cargaMaxima;
-	private int ano;
+	
+	public SolicitacaoDeTransporte(CadastroSolicitacaoDeTransporte dados, Produto produto, Caixa caixa) {
+		
+	
+	}
+	
+	public SolicitacaoDeTransporte(AtualizacaoSolicitacaoDeTransporte dados, Caixa caixa) {
+		this.produto.setNomeProduto(dados.nomeProduto());
+		this.produto.setComprimento(dados.comprimento());
+		this.produto.setLargura(dados.largura());
+		this.produto.setAltura(dados.altura());
+		this.produto.setPeso(dados.peso());
+		this.caixa = caixa;
+	}
+	
+	public void atualizarInformacoes(AtualizacaoSolicitacaoDeTransporte dados,Caixa caixa) {
+		if(dados.nomeProduto()!= null)
+			this.produto.setNomeProduto(dados.nomeProduto());
+		if(dados.comprimento()!= null)
+			this.produto.setComprimento(dados.comprimento());
+		if(dados.largura()!= null)
+			this.produto.setLargura(dados.largura());
+		if(dados.altura()!= null)
+			this.produto.setAltura(dados.altura());
+		if(dados.peso()!= null)
+			this.produto.setPeso(dados.peso());
+		if(caixa!= null)
+			this.caixa = caixa;
+	}
 	
 	
 	private List<Caixa> buscarCaixasDisponiveis(List<Caixa> caixas, Produto produto){

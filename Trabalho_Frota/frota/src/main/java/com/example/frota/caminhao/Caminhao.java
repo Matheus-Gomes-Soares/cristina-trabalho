@@ -52,6 +52,10 @@ public class Caminhao {
 		this.cargaMaxima = dados.cargaMaxima();
 		this.marca = marca;
 		this.ano= dados.ano();
+		this.comprimento = dados.comprimento();
+		this.altura = dados.altura();
+		this.largura = dados.largura();
+	
 	
 	}
 	public Caminhao(AtualizacaoCaminhao dados, Marca marca) {
@@ -78,6 +82,12 @@ public class Caminhao {
 			this.marca = marca;
 		if (dados.ano() != 0)
 			this.ano = dados.ano();
+		if(dados.comprimento()!= null)
+			this.comprimento = dados.comprimento();
+		if(dados.altura()!= null)
+			this.altura = dados.altura();
+		if(dados.largura()!= null)
+			this.largura = dados.largura();
 	}
 
 	
