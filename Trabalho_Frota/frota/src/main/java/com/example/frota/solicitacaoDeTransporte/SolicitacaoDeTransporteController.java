@@ -15,6 +15,9 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.example.frota.caixa.Caixa;
 import com.example.frota.caixa.CaixaService;
+import com.example.frota.caminhao.AtualizacaoCaminhao;
+import com.example.frota.caminhao.Caminhao;
+import com.example.frota.caminhao.CaminhaoMapper;
 
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
@@ -26,6 +29,9 @@ public class SolicitacaoDeTransporteController {
 
 	@Autowired
 	private SolicitacaoDeTransporteService solicitacaoDeTransporteService;
+	
+	@Autowired
+    private SolicitacaoDeTransporteMapper solicitacaoDeTransporteMapper;
 	
 	@Autowired
 	private CaixaService caixaService;
@@ -99,4 +105,3 @@ public class SolicitacaoDeTransporteController {
 	}
 
 }
-
