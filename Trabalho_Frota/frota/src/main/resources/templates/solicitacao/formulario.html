@@ -24,29 +24,29 @@
 			
 
 			<div class="form-group">
-				<label for="nomeProduto"> Nome Produto: </label> 
-				<input class="form-control" type="text" th:field="*{nomeProduto}"
-					th:classappend="${#fields.hasErrors('nomeProduto')} ? 'is-invalid'">
-					<div th:errors="*{nomeProduto}" class="invalid-feedback"></div>
+				<label for="produto.nomeProduto"> Nome Produto: </label> 
+				<input class="form-control" type="text" th:field="*{produto.nomeProduto}"
+					th:classappend="${#fields.hasErrors('produto.nomeProduto')} ? 'is-invalid'">
+					<div th:errors="*{produto.nomeProduto}" class="invalid-feedback"></div>
 			</div>
 			<div class="form-group">
-				<label for="comprimento"> Comprimento: </label> <input class="form-control"
-					type="number" th:field="*{comprimento}"
-					 th:classappend="${#fields.hasErrors('comprimento')} ? 'is-invalid'">
-                <div th:errors="*{comprimento}" class="invalid-feedback"></div>
+				<label for="produto.comprimento"> Comprimento: </label> <input class="form-control"
+					type="number" th:field="*{produto.comprimento}"
+					 th:classappend="${#fields.hasErrors('produto.comprimento')} ? 'is-invalid'">
+                <div th:errors="*{produto.comprimento}" class="invalid-feedback"></div>
 			</div>
 			<div class="form-group">
-				<label for="largura"> Largura: </label> <input class="form-control"
-					type="number" th:field="*{ano}"
-					 th:classappend="${#fields.hasErrors('largura')} ? 'is-invalid'">
-                <div th:errors="*{largura}" class="invalid-feedback"></div>
+				<label for="produto.largura"> Largura: </label> <input class="form-control"
+					type="number" th:field="*{produto.largura}"
+					 th:classappend="${#fields.hasErrors('produto.largura')} ? 'is-invalid'">
+                <div th:errors="*{produto.largura}" class="invalid-feedback"></div>
 			</div>
 			<div class="form-group">
-				<label for="altura"> Altura: </label> <input
+				<label for="produto.altura"> Altura: </label> <input
 					class="form-control" type="number"
-					th:field="*{altura}"
-					th:classappend="${#fields.hasErrors('altura')} ? 'is-invalid'">
-                <div th:errors="*{altura}" class="invalid-feedback"></div>
+					th:field="*{produto.altura}"
+					th:classappend="${#fields.hasErrors('produto.altura')} ? 'is-invalid'">
+                <div th:errors="*{produto.altura}" class="invalid-feedback"></div>
 			</div>
 			
 						<div class="form-group" style="margin-top: 20px;">
@@ -64,9 +64,9 @@
 			
 			
 			<button type="submit" class="btn btn-primary">
-                <span th:text="${caminhao.id != null} ? 'Atualizar' : 'Cadastrar'"></span>
+                <span th:text="${solicitacaoDeTransporte.id != null} ? 'Atualizar' : 'Cadastrar'"></span>
             </button>
-             <a th:href="@{/caminhoes}" class="btn btn-secondary">Cancelar</a>
+             <a th:href="@{/solicitacoesDeTransportes}" class="btn btn-secondary">Cancelar</a>
 		</form>
 	</div>
 	<div th:replace="~{fragmentos/footer :: footer}"></div>
