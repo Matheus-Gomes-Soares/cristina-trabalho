@@ -3,21 +3,15 @@ package com.example.frota.solicitacaoDeTransporte;
 import java.util.List;
 
 import com.example.frota.caixa.Caixa;
-import com.example.frota.caminhao.AtualizacaoCaminhao;
-import com.example.frota.caminhao.CadastroCaminhao;
-import com.example.frota.caminhao.Caminhao;
-import com.example.frota.marca.Marca;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
@@ -43,9 +37,13 @@ public class SolicitacaoDeTransporte {
 	@JoinColumn(name="caixa_id")
 	private Caixa caixa;
 	
-	public SolicitacaoDeTransporte(CadastroSolicitacaoDeTransporte dados, Produto produto, Caixa caixa) {
-		
-	
+	public SolicitacaoDeTransporte(CadastroSolicitacaoDeTransporte dados, Caixa caixa) {
+		this.produto.setNomeProduto(dados.nomeProduto());
+		this.produto.setComprimento(dados.comprimento());
+		this.produto.setLargura(dados.largura());
+		this.produto.setAltura(dados.altura());
+		this.produto.setPeso(dados.peso());
+		this.caixa = caixa;
 	}
 	
 	public SolicitacaoDeTransporte(AtualizacaoSolicitacaoDeTransporte dados, Caixa caixa) {
