@@ -38,9 +38,19 @@ public class SolicitacaoDeTransporteController {
 	
 	@GetMapping("/formulario")
 	public String carregaPaginaFormulario(@RequestParam(required = false) Long id, Model model) {
-	    SolicitacaoDeTransporte solicitacaoDeTransporte = (id != null) ? solicitacaoDeTransporteService.procurarPorId(id).orElse(new SolicitacaoDeTransporte(0L, null, null)) : new SolicitacaoDeTransporte();
-	    model.addAttribute("solicitacaoDeTransporte", solicitacaoDeTransporte);
-	    return "solicitacaoDeTransporte/formulario";
+		AtualizacaoSolicitacaoDeTransporte dto;
+        if (id != null) {
+            //edição: Carrega dados existentes
+        	SolicitacaoDeTransporte solicitacaoDeTransporte = solicitacaoDeTransporteService.procurarPorId(id)
+                .orElseThrow(() -> new EntityNotFoundException("Solicitação de transporte não encontrada"));
+            dto = solicitacaoDeTransporteMapper.toAtualizacaoDto(solicitacaoDeTransporte);
+        } else {
+            // criação: DTO vazio
+            dto = new AtualizacaoSolicitacaoDeTransporte(0L, "", 0.0, 0.0, 0.0, 0.0, 0L);
+        }
+        model.addAttribute("solicitacaoDeTransporte", dto);
+        model.addAttribute("caixas", caixaService.procurarTodos());
+        return "solicitacaoDeTransporte/formulario";
     }
 	
 	@DeleteMapping
@@ -89,3 +99,4 @@ public class SolicitacaoDeTransporteController {
 	}
 
 }
+
