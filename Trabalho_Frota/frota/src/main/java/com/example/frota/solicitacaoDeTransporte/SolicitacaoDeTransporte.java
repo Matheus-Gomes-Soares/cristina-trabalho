@@ -32,7 +32,7 @@ public class SolicitacaoDeTransporte {
 	@Column(name = "solicitacaoDeTransporte_id")
 	private Long id;
 	@Embedded
-	private Produto produto;
+	private Produto produto = new Produto();
 	@ManyToOne
 	@JoinColumn(name="caixa_id")
 	private Caixa caixa;

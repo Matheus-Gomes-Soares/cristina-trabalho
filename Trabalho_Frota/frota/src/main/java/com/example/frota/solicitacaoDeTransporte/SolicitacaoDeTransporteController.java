@@ -7,6 +7,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -52,12 +53,38 @@ public class SolicitacaoDeTransporteController {
             dto = solicitacaoDeTransporteMapper.toAtualizacaoDto(solicitacaoDeTransporte);
         } else {
             // criação: DTO vazio
-            dto = new AtualizacaoSolicitacaoDeTransporte(0L, "", 0.0, 0.0, 0.0, 0.0, 0L);
+            dto = new AtualizacaoSolicitacaoDeTransporte(null, null, null, null, null, null,null);
         }
         model.addAttribute("solicitacaoDeTransporte", dto);
         model.addAttribute("caixas", caixaService.procurarTodos());
         return "solicitacaoDeTransporte/formulario";
     }
+	
+	@GetMapping ("/formulario/{id}")    
+	public String carregaPaginaFormulario (@PathVariable("id") Long id, Model model,
+			RedirectAttributes redirectAttributes) {
+		AtualizacaoSolicitacaoDeTransporte dto;
+		System.out.println("entroiu aqui na modificação");
+		try {
+			if(id != null) {
+				System.out.println("entrou aqui porque o id não é nulo");
+				SolicitacaoDeTransporte solicitacaoDeTransporte = solicitacaoDeTransporteService.procurarPorId(id)
+						.orElseThrow(() -> new EntityNotFoundException("Solicitação de transporte não encontrada ID"));
+				model.addAttribute("caixas", caixaService.procurarTodos());
+				//mapear caminhão para AtualizacaoCaminhao
+				dto = solicitacaoDeTransporteMapper.toAtualizacaoDto(solicitacaoDeTransporte);
+				System.out.println("esse é p dto " + dto);
+				model.addAttribute("solicitacaoDeTransporte", dto);
+			}
+			return "solicitacaoDeTransporte/formulario";
+		} catch (EntityNotFoundException e) {
+			//resolver erros
+			redirectAttributes.addFlashAttribute("error", e.getMessage());
+			return "redirect:/solicitacaoDeTransporte";
+		}
+	}
+	
+	
 	
 	@DeleteMapping
 	@Transactional
@@ -86,12 +113,15 @@ public class SolicitacaoDeTransporteController {
 	                     BindingResult result,
 	                     RedirectAttributes redirectAttributes,
 	                     Model model) {
+		System.out.println("entrou no metodo salvar do controller");
 	    if (result.hasErrors()) {
+	    	result.getAllErrors().forEach(e -> System.out.println(e.toString()));
 	        return "solicitacaoDeTransporte/formulario";
 	    }
 
 	    try {
 	    	System.out.println("DTO recebido " + dto);
+	    	System.out.println("entrou no try e já printou dto");
 	        SolicitacaoDeTransporte solicitacaoDeTransporteSalva = solicitacaoDeTransporteService.salvarOuAtualizar(dto);
 	        String mensagem = dto.id() != null
 	            ? "SolicitacaoDeTransporte do produto'" + solicitacaoDeTransporteSalva.getProduto().getNomeProduto() + "' atualizada com sucesso!"
