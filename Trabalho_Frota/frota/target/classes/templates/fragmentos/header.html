@@ -13,31 +13,91 @@
 
 				<ul class="navbar-nav me-auto">
 					<!-- Item normal -->
+					<!--  
 					<li class="nav-item"><a class="nav-link"
 						th:classappend="${activePage == 'dashboard'} ? 'active' : ''"
 						th:href="@{/home/dashboard}"> <i class="fas fa-home me-1"></i>
 							Início
-					</a></li>
+					</a></li> -->
 
-					<!-- Dropdown de Marcas -->
+					<!-- Dropdown de Caminhão -->
 					<li class="nav-item dropdown">
-						<a class="nav-link dropdown-toggle" id="filmesDropdown"
+						<a class="nav-link dropdown-toggle" id="caminhaoDropDown"
 						role="button" data-bs-toggle="dropdown" aria-expanded="false"
-						th:classappend="${activePage == '' || activePage == 'caminhao'} ? 'active' : ''"
-						style="cursor: pointer;"> <i class="fas fa-film me-1"></i>
+					
+						style="cursor: pointer;"> <i class="fa-solid fa-truck"></i>
 							caminhao
 						</a>
-						<ul class="dropdown-menu" aria-labelledby="filmesDropdown">
+						<ul class="dropdown-menu" aria-labelledby="caminhaoDropDown">
 							<li><a class="dropdown-item"
-								th:classappend="${activePage == 'caminhao'} ? 'active' : ''"
+				
 								th:href="@{/caminhao}"> <i class="fas fa-list me-1"></i> Listagem Caminhao</a>
 							</li>
 							<li><a class="dropdown-item"
-								th:classappend="${activePage == 'caminhao'} ? 'active' : ''"
+								
 								th:href="@{/caminhao/formulario}"> <i class="fas fa-star me-1"></i> Cadastrar Caminhao
 							</a></li>
 						</ul>
 					</li>
+					
+					<li class="nav-item dropdown">
+						<a class="nav-link dropdown-toggle" id="MarcaDropDown"
+						role="button" data-bs-toggle="dropdown" aria-expanded="false"
+						
+						style="cursor: pointer;"> 
+							Marca
+						</a>
+						<ul class="dropdown-menu" aria-labelledby="MarcaDropDown">
+							<li><a class="dropdown-item"
+					
+								th:href="@{/marca}"> <i class="fas fa-list me-1"></i> Listagem Marca</a>
+							</li>
+							<li><a class="dropdown-item"
+							
+								th:href="@{/marca/formulario}"> <i class="fas fa-star me-1"></i> Cadastrar Marca
+							</a></li>
+						</ul>
+					</li>
+					
+					<li class="nav-item dropdown">
+						<a class="nav-link dropdown-toggle" id="CaixaDropDown"
+						role="button" data-bs-toggle="dropdown" aria-expanded="false"
+						
+						style="cursor: pointer;"> <i class="fa-solid fa-box"></i>
+							Caixa
+						</a>
+						<ul class="dropdown-menu" aria-labelledby="CaixaDropDown">
+							<li><a class="dropdown-item"
+					
+								th:href="@{/caixa}"> <i class="fas fa-list me-1"></i> Listagem Caixa</a>
+							</li>
+							<li><a class="dropdown-item"
+							
+								th:href="@{/caixa/formulario}"> <i class="fas fa-star me-1"></i> Cadastrar Caixa
+							</a></li>
+						</ul>
+					</li>
+					
+					<li class="nav-item dropdown">
+						<a class="nav-link dropdown-toggle" id="SolicitacaoDropDown"
+						role="button" data-bs-toggle="dropdown" aria-expanded="false"
+						
+						style="cursor: pointer;"> <i class="fa-solid fa-truck-fast"></i>
+							Solicitação de Transporte
+						</a>
+						<ul class="dropdown-menu" aria-labelledby="SolicitacaoDropDown">
+							<li><a class="dropdown-item"
+					
+								th:href="@{/solicitacaoDeTransporte}"> <i class="fas fa-list me-1"></i> Listagem Solicitação</a>
+							</li>
+							<li><a class="dropdown-item"
+							
+								th:href="@{/solicitacaoDeTransporte/formulario}"> <i class="fas fa-star me-1"></i> Cadastrar Solicitação
+							</a></li>
+						</ul>
+					</li>
+					
+					
 				</ul>
 
 				<div class="d-flex align-items-center">

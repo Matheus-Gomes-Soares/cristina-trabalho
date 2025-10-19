@@ -5,7 +5,7 @@
 <header th:replace="~{fragmentos/header :: header(activePage='marca')}"></header>
 
 <div layout:fragment="header">
-	<div class="box">
+	<div class="container-fluid" style="max-width: 900px; margin: 0 auto;">
 		<h1>Cadastro Marca</h1>
 		<form method="post" action="/marca">
 			<input type="hidden" name="_method" value="put" th:if="${marca!= null}">
@@ -25,5 +25,6 @@
 		</form>
 	</div>
 </div>
+<div th:replace="~{fragmentos/footer :: footer}"></div>
 </body>
 </html>
