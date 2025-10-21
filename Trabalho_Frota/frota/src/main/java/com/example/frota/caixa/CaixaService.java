@@ -1,11 +1,14 @@
 package com.example.frota.caixa;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+
+import com.example.frota.solicitacaoDeTransporte.DtoProduto;
 
 import jakarta.persistence.EntityNotFoundException;
 
@@ -18,9 +21,34 @@ public class CaixaService {
 	public Caixa salvar(Caixa caixa) {
 		return caixaRepository.save(caixa);
 	}
+	
 	public List<Caixa> procurarTodos(){
 		return caixaRepository.findAll(Sort.by("modelo").ascending());
 	}
+	
+	public List<Caixa> procurarCorrespondentes(DtoProduto dto){
+		List<Caixa> todas = caixaRepository.findAll(Sort.by("modelo").ascending());
+		List<Caixa> correspondente = new ArrayList();
+		for(Caixa caixa: todas) {
+			if(caixa.getAltura() > dto.altura() && caixa.getComprimento() > dto.comprimento() && caixa.getLargura() > dto.largura()
+					&& caixa.getLimiteDePeso() > dto.peso()) {
+				correspondente.add(caixa);
+			}
+		}
+		return correspondente;
+				
+	}
+	
+	public List<Caixa> filtrarCaixas(DtoProduto filtro) {
+		System.out.println("tentou listar");
+        return caixaRepository.findAll().stream()
+            .filter(c -> c.getComprimento() >= filtro.comprimento()
+                      && c.getLargura() >= filtro.largura()
+                      && c.getAltura() >= filtro.altura()
+                      && c.getLimiteDePeso() >= filtro.peso())
+            .toList();
+    }
+	
 	public void apagarPorId (Long id) {
 		caixaRepository.deleteById(id);
 	}

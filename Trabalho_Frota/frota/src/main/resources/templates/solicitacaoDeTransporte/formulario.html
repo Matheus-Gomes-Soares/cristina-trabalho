@@ -77,5 +77,44 @@
 		</form>
 	</div>
 	<div th:replace="~{fragmentos/footer :: footer}"></div>
+	
+	<script>
+document.addEventListener("DOMContentLoaded", function() {
+    const camposFiltro = ["comprimento", "largura", "altura", "peso"];
+    const selectCaixa = document.querySelector("[name='caixaId']");
+
+    camposFiltro.forEach(campo => {
+        document.querySelector(`[name='${campo}']`).addEventListener("change", atualizarCaixas);
+    });
+
+    async function atualizarCaixas() {
+        const filtro = {
+            comprimento: parseFloat(document.querySelector("[name='comprimento']").value) || 0,
+            largura: parseFloat(document.querySelector("[name='largura']").value) || 0,
+            altura: parseFloat(document.querySelector("[name='altura']").value) || 0,
+            peso: parseFloat(document.querySelector("[name='peso']").value) || 0
+        };
+
+        const response = await fetch("/caixa/filtrar", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(filtro)
+        });
+
+        if (response.ok) {
+            const caixas = await response.json();
+            selectCaixa.innerHTML = '<option value="">-Selecione uma caixa-</option>';
+            caixas.forEach(caixa => {
+                const opt = document.createElement("option");
+                opt.value = caixa.id;
+                opt.textContent = caixa.modelo;
+                selectCaixa.appendChild(opt);
+            });
+        }
+    }
+});
+</script>
+	
+	
 </body>
 </html>

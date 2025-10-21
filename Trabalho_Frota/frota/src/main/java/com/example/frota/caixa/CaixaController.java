@@ -1,5 +1,7 @@
 package com.example.frota.caixa;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -9,12 +11,16 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.example.frota.caminhao.AtualizacaoCaminhao;
 import com.example.frota.caminhao.Caminhao;
+import com.example.frota.solicitacaoDeTransporte.DtoProduto;
+
 
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
@@ -63,29 +69,13 @@ public class CaixaController {
 		return "redirect:caixa";
 	}
 	
-//	@PostMapping("/salvar")
-//	public String salvar(@ModelAttribute("caixa") @Valid AtualizacaoCaixa dto,
-//	                     BindingResult result,
-//	                     RedirectAttributes redirectAttributes,
-//	                     Model model) {
-//	    if (result.hasErrors()) {
-//	        // Se tiver validação, recarregue dados necessários (se houver)
-//	        return "caixa/formulario";
-//	    }
-//
-//	    try {
-//	        Caixa caixaSalva = caixaService.salvarOuAtualizar(dto);
-//	        String mensagem = dto.id() != null
-//	            ? "Caixa '" + caixaSalva.getModelo() + "' atualizada com sucesso!"
-//	            : "Caixa '" + caixaSalva.getModelo() + "' criada com sucesso!";
-//	        redirectAttributes.addFlashAttribute("message", mensagem);
-//	        return "redirect:/caixa";
-//	    } catch (EntityNotFoundException e) {
-//	        redirectAttributes.addFlashAttribute("error", e.getMessage());
-//	        return "redirect:/caixa/formulario" + (dto.id() != null ? "?id=" + dto.id() : "");
-//	    }
-//	}
-	
+	  @PostMapping("/filtrar")
+	  @ResponseBody
+	    public List<Caixa> filtrarCaixas(@RequestBody DtoProduto filtro) {
+		  System.out.println("entrou no filtrar caixas");
+	        return caixaService.filtrarCaixas(filtro);
+	    }
+
 	@PostMapping("/salvar")
 	public String salvar(@ModelAttribute("caixa") @Valid AtualizacaoCaixa dto,
 	                     BindingResult result,
