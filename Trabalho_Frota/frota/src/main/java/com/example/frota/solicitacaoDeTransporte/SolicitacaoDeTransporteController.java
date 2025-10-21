@@ -56,7 +56,7 @@ public class SolicitacaoDeTransporteController {
             dto = new AtualizacaoSolicitacaoDeTransporte(null, null, null, null, null, null,null);
         }
         model.addAttribute("solicitacaoDeTransporte", dto);
-        model.addAttribute("caixas", caixaService.procurarTodos());
+        model.addAttribute("caixas", null);
         return "solicitacaoDeTransporte/formulario";
     }
 	
@@ -70,7 +70,7 @@ public class SolicitacaoDeTransporteController {
 				System.out.println("entrou aqui porque o id não é nulo");
 				SolicitacaoDeTransporte solicitacaoDeTransporte = solicitacaoDeTransporteService.procurarPorId(id)
 						.orElseThrow(() -> new EntityNotFoundException("Solicitação de transporte não encontrada ID"));
-				model.addAttribute("caixas", caixaService.procurarTodos());
+				model.addAttribute("caixas", solicitacaoDeTransporte.getCaixa());
 				//mapear caminhão para AtualizacaoCaminhao
 				dto = solicitacaoDeTransporteMapper.toAtualizacaoDto(solicitacaoDeTransporte);
 				System.out.println("esse é p dto " + dto);
