@@ -27,16 +27,22 @@
 	                <th scope="col">Altura</th>
 	                <th scope="col">Peso</th>
 	                <th scope="col">Caixa</th>
+	                <th scope="col">Origem</th>
+	                <th scope="col">destino</th>
+	                <th scope="col">valor frete</th>
 	            </tr>
 	        </thead>
 	        <tbody>
-	            <tr th:each="solicitacaoDeTransporte : ${lista}">
-	                <td th:text="${solicitacaoDeTransporte.produto.nomeProduto}"></td>
-	                <td th:text="${solicitacaoDeTransporte.produto.comprimento}"></td>
-	                <td th:text="${solicitacaoDeTransporte.produto.largura}"></td>
-	                <td th:text="${solicitacaoDeTransporte.produto.peso}"></td>
-	                <td th:text="${solicitacaoDeTransporte.caixa.modelo}"></td>
-	               
+	         <tr th:each="solicitacaoDeTransporte : ${lista}">
+    <td th:text="${solicitacaoDeTransporte.produto.nomeProduto}"></td>
+    <td th:text="${solicitacaoDeTransporte.produto.comprimento}"></td>
+    <td th:text="${solicitacaoDeTransporte.produto.largura}"></td>
+    <td th:text="${solicitacaoDeTransporte.produto.altura}"></td>
+    <td th:text="${solicitacaoDeTransporte.produto.peso}"></td>
+    <td th:text="${solicitacaoDeTransporte.caixa.modelo}"></td>
+    <td th:text="${solicitacaoDeTransporte.origemCep + ' - ' + solicitacaoDeTransporte.origemRua + ', ' + solicitacaoDeTransporte.origemNumero}"></td>
+    <td th:text="${solicitacaoDeTransporte.destinoCep + ' - ' + solicitacaoDeTransporte.destinoRua + ', ' + solicitacaoDeTransporte.destinoNumero}"></td>
+	<td th:text="${solicitacaoDeTransporte.valorFrete}"></td>
 						
 						
 					<td><a th:href="@{'/solicitacaoDeTransporte/formulario/' + ${solicitacaoDeTransporte.id}}"

@@ -17,11 +17,20 @@
 			</button>
 		</div>
 
-		<form th:action="@{/solicitacaoDeTransporte/salvar}" th:object="${solicitacaoDeTransporte}"
-			method="post" >
-			<input type="hidden" th:field="*{id}" />
+		<div th:if="${error != null}"
+		     class="alert alert-danger alert-dismissible fade show text-center"
+		     role="alert">
+		    [[${error}]]
+		    <button type="button" class="close btn-sm" data-dismiss="alert"
+		            aria-label="Close">
+		        <span aria-hidden="true">&times;</span>
+		    </button>
+		</div>
 
-			
+		<form th:action="@{/solicitacaoDeTransporte/salvar}" th:object="${solicitacaoDeTransporte}"
+			method="post" id="solicitacaoForm">
+			<input type="hidden" th:field="*{id}" />
+			<input type="hidden" th:field="*{valorFrete}" />
 
 			<div class="form-group">
 				<label for="nomeProduto"> Nome Produto: </label> 
@@ -56,7 +65,51 @@
                 <div th:errors="*{peso}" class="invalid-feedback"></div>
 			</div>
 			
-						<div class="form-group" style="margin-top: 20px;">
+			<!-- ORIGEM -->
+			<div class="form-group" style="margin-top: 20px;">
+			    <label>Origem do transporte:</label>
+			    <div class="row">
+			        <div class="col-md-4">
+			            <input class="form-control" placeholder="CEP" th:field="*{origemCep}"
+			                   th:classappend="${#fields.hasErrors('origemCep')} ? 'is-invalid'">
+			            <div th:errors="*{origemCep}" class="invalid-feedback"></div>
+			        </div>
+			        <div class="col-md-6">
+			            <input class="form-control" placeholder="Rua" th:field="*{origemRua}"
+			                   th:classappend="${#fields.hasErrors('origemRua')} ? 'is-invalid'">
+			            <div th:errors="*{origemRua}" class="invalid-feedback"></div>
+			        </div>
+			        <div class="col-md-2">
+			            <input class="form-control" placeholder="Nº" th:field="*{origemNumero}"
+			                   th:classappend="${#fields.hasErrors('origemNumero')} ? 'is-invalid'">
+			            <div th:errors="*{origemNumero}" class="invalid-feedback"></div>
+			        </div>
+			    </div>
+			</div>
+
+			<!-- DESTINO -->
+			<div class="form-group" style="margin-top: 20px;">
+			    <label>Destino do transporte:</label>
+			    <div class="row">
+			        <div class="col-md-4">
+			            <input class="form-control" placeholder="CEP" th:field="*{destinoCep}"
+			                   th:classappend="${#fields.hasErrors('destinoCep')} ? 'is-invalid'">
+			            <div th:errors="*{destinoCep}" class="invalid-feedback"></div>
+			        </div>
+			        <div class="col-md-6">
+			            <input class="form-control" placeholder="Rua" th:field="*{destinoRua}"
+			                   th:classappend="${#fields.hasErrors('destinoRua')} ? 'is-invalid'">
+			            <div th:errors="*{destinoRua}" class="invalid-feedback"></div>
+			        </div>
+			        <div class="col-md-2">
+			            <input class="form-control" placeholder="Nº" th:field="*{destinoNumero}"
+			                   th:classappend="${#fields.hasErrors('destinoNumero')} ? 'is-invalid'">
+			            <div th:errors="*{destinoNumero}" class="invalid-feedback"></div>
+			        </div>
+			    </div>
+			</div>
+			
+			<div class="form-group" style="margin-top: 20px;">
 				<label>Insira os dados da caixa:</label> 
 				<select th:field="*{caixaId}" 
 					class="form-control"
@@ -69,22 +122,39 @@
 				<div th:errors="*{caixaId}" class="invalid-feedback"></div>
 			</div>
 			
+			<!-- EXIBIÇÃO DO FRETE CALCULADO DENTRO DO FORM -->
+			<div th:if="${freteCalculado != null}" class="form-group">
+			    <label>Valor do Frete:</label>
+			    <input id="freteCalculado" class="form-control" type="text" th:value="${freteCalculado}" readonly>
+			</div>
 			
-			<button type="submit" class="btn btn-primary">
-                <span th:text="${solicitacaoDeTransporte.id != null} ? 'Atualizar' : 'Cadastrar'"></span>
-            </button>
-             <a th:href="@{/solicitacoesDeTransportes}" class="btn btn-secondary">Cancelar</a>
+			<div class="form-group text-right">
+				<button type="submit"
+		        class="btn btn-info"
+		        formaction="/solicitacaoDeTransporte/formulario/calcularFrete"
+		        formmethod="post">
+		    		Calcular Frete
+				</button>
+				
+				<button type="submit" class="btn btn-primary" id="btnSalvar" disabled>
+		    		<span th:text="${solicitacaoDeTransporte.id != null} ? 'Atualizar' : 'Cadastrar'"></span>
+				</button>
+			</div>
 		</form>
 	</div>
 	<div th:replace="~{fragmentos/footer :: footer}"></div>
 	
 	<script>
 document.addEventListener("DOMContentLoaded", function() {
+    // --- Atualização de caixas ---
     const camposFiltro = ["comprimento", "largura", "altura", "peso"];
     const selectCaixa = document.querySelector("[name='caixaId']");
 
     camposFiltro.forEach(campo => {
-        document.querySelector(`[name='${campo}']`).addEventListener("change", atualizarCaixas);
+        const campoElement = document.querySelector(`[name='${campo}']`);
+        if (campoElement) {
+            campoElement.addEventListener("change", atualizarCaixas);
+        }
     });
 
     async function atualizarCaixas() {
@@ -112,9 +182,35 @@ document.addEventListener("DOMContentLoaded", function() {
             });
         }
     }
+
+
+    const btnSalvar = document.getElementById("btnSalvar");
+    
+    function verificarFreteEHabilitarBotao() {
+        const inputFrete = document.getElementById("freteCalculado");
+        if (inputFrete && inputFrete.value.trim() !== "") {
+            btnSalvar.disabled = false;
+            return true;
+        }
+        return false;
+    }
+
+   
+    setTimeout(verificarFreteEHabilitarBotao, 100);
+
+    const btnCalcular = document.querySelector("button[formaction$='calcularFrete']");
+    if (btnCalcular) {
+        btnCalcular.addEventListener("click", function() {
+            // Desabilita o botão salvar enquanto calcula
+            btnSalvar.disabled = true;
+            
+          
+            setTimeout(() => {
+                verificarFreteEHabilitarBotao();
+            }, 1000);
+        });
+    }
 });
-</script>
-	
-	
+	</script>
 </body>
 </html>

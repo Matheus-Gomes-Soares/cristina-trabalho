@@ -1,5 +1,7 @@
 package com.example.frota.solicitacaoDeTransporte;
 
+import com.example.frota.caixa.CaixasFiltro;
+
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
@@ -22,6 +24,6 @@ public record DtoProduto(
 				@NotNull(message = "Altura é obrigatória")
 			    @Positive(message = "Altura deve ser positiva")
 				Double altura
-				) {
+				)  implements CaixasFiltro {
 
 }

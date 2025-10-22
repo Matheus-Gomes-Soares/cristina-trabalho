@@ -43,6 +43,43 @@ public class SolicitacaoDeTransporteController {
 		return "solicitacaoDeTransporte/listagem";              
 	} 
 	
+	@PostMapping("/formulario/calcularFrete")
+	public String calcularFrete(@ModelAttribute AtualizacaoSolicitacaoDeTransporte dto,
+	                            Model model,
+	                            RedirectAttributes redirectAttributes) {
+	    try {
+	        Double freteCalculado = solicitacaoDeTransporteService.calcularFrete(dto);
+	        
+	        // ATUALIZA O DTO COM O VALOR DO FRETE
+	        // Se seu DTO é um record, você precisa criar uma nova instância:
+	        dto = new AtualizacaoSolicitacaoDeTransporte(
+	        	    dto.id(),
+	        	    dto.nomeProduto(),
+	        	    dto.peso(),          
+	        	    dto.largura(),
+	        	    dto.comprimento(),
+	        	    dto.altura(),
+	        	    dto.caixaId(),       
+	        	    dto.origemCep(),
+	        	    dto.origemRua(),
+	        	    dto.origemNumero(),
+	        	    dto.destinoCep(),
+	        	    dto.destinoRua(),
+	        	    dto.destinoNumero(),
+	        	    freteCalculado       
+	        	);
+	        
+	        model.addAttribute("freteCalculado", freteCalculado);
+	    } catch (RuntimeException e) {
+	        model.addAttribute("error", "Erro ao calcular frete: " + e.getMessage());
+	    }
+	    
+	    model.addAttribute("solicitacaoDeTransporte", dto);
+	    model.addAttribute("caixas", caixaService.procurarCorrespondentes(dto));
+
+	    return "solicitacaoDeTransporte/formulario";
+	}
+
 	@GetMapping("/formulario")
 	public String carregaPaginaFormulario(@RequestParam(required = false) Long id, Model model) {
 		AtualizacaoSolicitacaoDeTransporte dto;
@@ -53,7 +90,7 @@ public class SolicitacaoDeTransporteController {
             dto = solicitacaoDeTransporteMapper.toAtualizacaoDto(solicitacaoDeTransporte);
         } else {
             // criação: DTO vazio
-            dto = new AtualizacaoSolicitacaoDeTransporte(null, null, null, null, null, null,null);
+            dto = new AtualizacaoSolicitacaoDeTransporte(null, null, null, null, null, null,null, null, null, null, null, null, null, null);
         }
         model.addAttribute("solicitacaoDeTransporte", dto);
         model.addAttribute("caixas", null);
@@ -64,7 +101,7 @@ public class SolicitacaoDeTransporteController {
 	public String carregaPaginaFormulario (@PathVariable("id") Long id, Model model,
 			RedirectAttributes redirectAttributes) {
 		AtualizacaoSolicitacaoDeTransporte dto;
-		System.out.println("entroiu aqui na modificação");
+
 		try {
 			if(id != null) {
 				System.out.println("entrou aqui porque o id não é nulo");
@@ -73,7 +110,6 @@ public class SolicitacaoDeTransporteController {
 				model.addAttribute("caixas", solicitacaoDeTransporte.getCaixa());
 				//mapear caminhão para AtualizacaoCaminhao
 				dto = solicitacaoDeTransporteMapper.toAtualizacaoDto(solicitacaoDeTransporte);
-				System.out.println("esse é p dto " + dto);
 				model.addAttribute("solicitacaoDeTransporte", dto);
 			}
 			return "solicitacaoDeTransporte/formulario";
@@ -110,19 +146,26 @@ public class SolicitacaoDeTransporteController {
 	
 	@PostMapping("/salvar")
 	public String salvar(@ModelAttribute("solicitacaoDeTransporte") @Valid AtualizacaoSolicitacaoDeTransporte dto,
+	                     @RequestParam(value = "valorFrete", required = false) Double valorFrete,
 	                     BindingResult result,
 	                     RedirectAttributes redirectAttributes,
 	                     Model model) {
-		System.out.println("entrou no metodo salvar do controller");
+	    System.out.println("entrou no metodo salvar do controller");
+	    System.out.println("Valor do frete recebido: " + valorFrete);
+	    
 	    if (result.hasErrors()) {
-	    	result.getAllErrors().forEach(e -> System.out.println(e.toString()));
+	        result.getAllErrors().forEach(e -> System.out.println(e.toString()));
 	        return "solicitacaoDeTransporte/formulario";
 	    }
 
 	    try {
-	    	System.out.println("DTO recebido " + dto);
-	    	System.out.println("entrou no try e já printou dto");
-	        SolicitacaoDeTransporte solicitacaoDeTransporteSalva = solicitacaoDeTransporteService.salvarOuAtualizar(dto);
+	        System.out.println("DTO recebido " + dto);
+	        System.out.println("Valor do frete: " + valorFrete);
+	        
+	        // Se necessário, você pode setar o valor do frete no DTO aqui
+	        // ou passar para o service
+	        SolicitacaoDeTransporte solicitacaoDeTransporteSalva = solicitacaoDeTransporteService.salvarOuAtualizar(dto, valorFrete);
+	        
 	        String mensagem = dto.id() != null
 	            ? "SolicitacaoDeTransporte do produto'" + solicitacaoDeTransporteSalva.getProduto().getNomeProduto() + "' atualizada com sucesso!"
 	            : "SolicitacaoDeTransporte do produto'" + solicitacaoDeTransporteSalva.getProduto().getNomeProduto() + "' criada com sucesso!";

@@ -31,6 +31,7 @@ public class Caixa {
 	private double altura;
     private String material;
     private double limiteDePeso;
+    private final double fatorCubagem = 300; // Fator de cubagem para transporte rodoviário: 300 kg/m³.
 
 	public Caixa(CadastroCaixa dados) {
 		//novos na atualização
@@ -65,5 +66,8 @@ public class Caixa {
         if(dados.limiteDePeso() != 0)
             this.limiteDePeso = dados.limiteDePeso();
 	}
-	
+	public double calculoMetragem(){
+		double resultadoMetragem = this.altura * this.largura * this.comprimento * this.fatorCubagem;
+		return resultadoMetragem;
+	}
 }

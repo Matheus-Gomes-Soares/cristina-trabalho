@@ -1,5 +1,7 @@
 package com.example.frota.solicitacaoDeTransporte;
 
+import com.example.frota.caixa.CaixasFiltro;
+
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -26,12 +28,31 @@ public record AtualizacaoSolicitacaoDeTransporte(
 		Double altura, 
 		
 	    @NotNull(message = "Caixa é obrigatória")
-	    Long caixaId
+	    Long caixaId,
 		
-		//atributos novos
+	    @NotBlank(message = "Cep de Origem é obrigatório") 
+	    String origemCep,
+	    
+	    @NotBlank(message = "Rua de origem é obrigatória") 
+	    String origemRua,
+	    
+	    @NotBlank(message = "Numero de origem é obrigatório") 
+	    String origemNumero,
+	    
+	    @NotBlank(message = "Cep de Origem é obrigatório") 
+	    String destinoCep,
+	    
+	    @NotBlank(message = "Rua de origem é obrigatória") 
+	    String destinoRua,
+	    
+	    @NotBlank(message = "Numero de origem é obrigatório") 
+	    String destinoNumero,
+	    
+		Double valorFrete
+	
 		
 	
 		
-	) {}
+	) implements CaixasFiltro {}
 
 

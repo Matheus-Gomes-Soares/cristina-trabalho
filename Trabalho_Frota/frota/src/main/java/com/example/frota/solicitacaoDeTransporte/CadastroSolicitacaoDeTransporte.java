@@ -5,7 +5,7 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 
 public record CadastroSolicitacaoDeTransporte(
-	    @NotBlank(message = "Modelo é obrigatório") 
+	    @NotBlank(message = "Nome Produto é obrigatório") 
 	    String nomeProduto,
 	    
 	    @NotNull(message = "Peso é obrigatória")
@@ -23,5 +23,26 @@ public record CadastroSolicitacaoDeTransporte(
 		Double altura, 
 		
 	    @NotNull(message = "Caixa é obrigatória")
-	    Long caixaId
+	    Long caixaId,
+	    
+	    @NotBlank(message = "Cep de Origem é obrigatório") 
+	    String origemCep,
+	    
+	    @NotBlank(message = "Rua de origem é obrigatória") 
+	    String origemRua,
+	    
+	    @NotBlank(message = "Numero de origem é obrigatório") 
+	    String origemNumero,
+	    
+	    @NotBlank(message = "Cep de Origem é obrigatório") 
+	    String destinoCep,
+	    
+	    @NotBlank(message = "Rua de origem é obrigatória") 
+	    String destinoRua,
+	    
+	    @NotBlank(message = "Numero de origem é obrigatório") 
+	    String destinoNumero,
+	    
+		Double valorFrete
+	    
 	) {}
