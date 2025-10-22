@@ -67,7 +67,7 @@ public class Caixa {
             this.limiteDePeso = dados.limiteDePeso();
 	}
 	public double calculoMetragem(){
-		double resultadoMetragem = this.altura * this.largura * this.comprimento * this.fatorCubagem;
+		double resultadoMetragem = (this.altura/100) * (this.largura/100) * (this.comprimento/100) * this.fatorCubagem;
 		return resultadoMetragem;
 	}
 }

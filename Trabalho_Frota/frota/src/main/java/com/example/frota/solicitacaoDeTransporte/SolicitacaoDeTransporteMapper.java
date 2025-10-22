@@ -44,6 +44,7 @@ public interface SolicitacaoDeTransporteMapper {
     default Caixa idToCaixa(Long caixaId) {
         if (caixaId == null) return null;
         Caixa caixa = new Caixa();
+       
         caixa.setId(caixaId);
         return caixa;
     }

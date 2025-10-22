@@ -111,9 +111,10 @@ public class SolicitacaoDeTransporteService {
 				centavos = Double.parseDouble(centavosString.substring(0, 1));
 		}
 		
-				
+		Optional<Caixa> caixa = caixaService.procurarPorId(dto.caixaId());
+		Caixa caixaNova =  caixa.orElse(null);
 		SolicitacaoDeTransporte solicitacaoDeTransporte = solicitacaoDeTransporteMapper.toEntityFromAtualizacao(dto);
-		double resultado = solicitacaoDeTransporte.calcularFrete(metros,reais,centavos);
+		double resultado = solicitacaoDeTransporte.calcularFrete(metros,reais,centavos, caixaNova);
 		return resultado;
 	}
 	

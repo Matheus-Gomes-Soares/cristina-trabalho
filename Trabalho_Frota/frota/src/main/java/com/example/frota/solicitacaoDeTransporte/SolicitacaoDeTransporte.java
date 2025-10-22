@@ -27,6 +27,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @EqualsAndHashCode(of ="id")
 public class SolicitacaoDeTransporte {
+	
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name = "solicitacaoDeTransporte_id")
@@ -119,12 +120,14 @@ public class SolicitacaoDeTransporte {
 		return caixasDisponiveis;
 	}
 	
-	public double calcularFrete(double metros, double reais, double centavos) {
+	public double calcularFrete(double metros, double reais, double centavos, Caixa caixaNova) {
 		
 		double resultado = 0;
-		double maiorPeso = (this.caixa.calculoMetragem()> this.produto.getPeso())? this.caixa.calculoMetragem(): this.produto.getPeso();
+	
+		double maiorPeso = (caixaNova.calculoMetragem()> this.produto.getPeso())? caixaNova.calculoMetragem(): this.produto.getPeso();
+		System.out.println(caixaNova.calculoMetragem() + "calculoMetragem");
 		
-		
+		System.out.println(this.caixa.getId() + "id caixa");
 		double pedagio = reais + (centavos * 0.01);
 		resultado+= maiorPeso * 0.5;
 		System.out.println("resultado considereando peso " + resultado);
