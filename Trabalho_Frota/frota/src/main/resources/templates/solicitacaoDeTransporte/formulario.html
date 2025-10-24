@@ -39,26 +39,26 @@
 					<div th:errors="*{nomeProduto}" class="invalid-feedback"></div>
 			</div>
 			<div class="form-group">
-				<label for="comprimento"> Comprimento: </label> <input class="form-control"
+				<label for="comprimento"> Comprimento(cm): </label> <input class="form-control"
 					type="number" th:field="*{comprimento}"
 					 th:classappend="${#fields.hasErrors('comprimento')} ? 'is-invalid'">
                 <div th:errors="*{comprimento}" class="invalid-feedback"></div>
 			</div>
 			<div class="form-group">
-				<label for="largura"> Largura: </label> <input class="form-control"
+				<label for="largura"> Largura(cm): </label> <input class="form-control"
 					type="number" th:field="*{largura}"
 					 th:classappend="${#fields.hasErrors('largura')} ? 'is-invalid'">
                 <div th:errors="*{largura}" class="invalid-feedback"></div>
 			</div>
 			<div class="form-group">
-				<label for="altura"> Altura: </label> <input
+				<label for="altura"> Altura(cm): </label> <input
 					class="form-control" type="number"
 					th:field="*{altura}"
 					th:classappend="${#fields.hasErrors('altura')} ? 'is-invalid'">
                 <div th:errors="*{altura}" class="invalid-feedback"></div>
 			</div>
 			<div class="form-group">
-				<label for="peso"> Peso: </label> <input
+				<label for="peso"> Peso(kg): </label> <input
 					class="form-control" type="number"
 					th:field="*{peso}"
 					th:classappend="${#fields.hasErrors('peso')} ? 'is-invalid'">
@@ -156,6 +156,18 @@ document.addEventListener("DOMContentLoaded", function() {
             campoElement.addEventListener("change", atualizarCaixas);
         }
     });
+    
+    if (selectCaixa) {
+        selectCaixa.addEventListener("click", atualizarCaixas);
+    }
+    
+    if (selectCaixa) {
+    	 selectCaixa.addEventListener("change", desabilitarBotao);
+    }
+    
+    function desabilitarBotao(){
+    	   btnSalvar.disabled = true;
+    }
 
     async function atualizarCaixas() {
         const filtro = {
@@ -165,6 +177,9 @@ document.addEventListener("DOMContentLoaded", function() {
             peso: parseFloat(document.querySelector("[name='peso']").value) || 0
         };
 
+       
+        const caixaSelecionada = selectCaixa.value;
+
         const response = await fetch("/caixa/filtrar", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
@@ -173,16 +188,28 @@ document.addEventListener("DOMContentLoaded", function() {
 
         if (response.ok) {
             const caixas = await response.json();
+
+       
             selectCaixa.innerHTML = '<option value="">-Selecione uma caixa-</option>';
             caixas.forEach(caixa => {
                 const opt = document.createElement("option");
                 opt.value = caixa.id;
-                opt.textContent = caixa.modelo;
+                opt.textContent = `${caixa.modelo} (${caixa.comprimento}(cm) × ${caixa.altura}(cm) × ${caixa.largura})(cm)`;
                 selectCaixa.appendChild(opt);
             });
+
+    
+            const aindaValida = caixas.some(caixa => caixa.id == caixaSelecionada);
+            if (aindaValida) {
+                selectCaixa.value = caixaSelecionada;
+            } else {
+                btnSalvar.disabled = true;
+                selectCaixa.value = "";
+            }
         }
     }
 
+   
 
     const btnSalvar = document.getElementById("btnSalvar");
     
@@ -201,7 +228,7 @@ document.addEventListener("DOMContentLoaded", function() {
     const btnCalcular = document.querySelector("button[formaction$='calcularFrete']");
     if (btnCalcular) {
         btnCalcular.addEventListener("click", function() {
-            // Desabilita o botão salvar enquanto calcula
+      
             btnSalvar.disabled = true;
             
           
